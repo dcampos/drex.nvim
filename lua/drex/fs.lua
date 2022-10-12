@@ -272,9 +272,14 @@ function M.scan_directory(path, root_path)
     end
 
     local icons_loaded, icons = pcall(require, 'nvim-web-devicons')
+    local result = {}
     for i = 1, #content do
         local name, type = content[i][1], content[i][2]
         local icon = config.options.icons.file_default
+
+        if not config.options.show_hidden_files and vim.startswith(name, '.') then
+            goto continue
+        end
 
         if type == 'directory' then
             icon = config.options.icons.dir_closed
@@ -286,10 +291,11 @@ function M.scan_directory(path, root_path)
             icon = icons.get_icon(name, vim.fn.fnamemodify(name, ':e'), { default = true })
         end
 
-        content[i] = indentation .. icon .. ' ' .. path .. name
+        table.insert(result, indentation .. icon .. ' ' .. path .. name)
+        ::continue::
     end
 
-    return content
+    return result
 end
 
 return M
