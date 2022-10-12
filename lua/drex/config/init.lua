@@ -41,6 +41,7 @@ local defaults = {
     },
     disable_default_keybindings = false,
     show_hidden_files = false,
+    indentation = '  ',
     keybindings = {
         ['n'] = {
             -- always use visual mode linewise for better visibility
