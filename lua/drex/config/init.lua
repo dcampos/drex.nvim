@@ -41,6 +41,7 @@ local defaults = {
     },
     disable_default_keybindings = false,
     show_hidden_files = false,
+    indentation = '  ',
     keybindings = {
         ['n'] = {
             -- always use visual mode linewise for better visibility
@@ -90,7 +91,7 @@ local defaults = {
             -- manual reload
             ['<F5>'] = { '<cmd>lua require("drex").reload_directory()<CR>', { desc = 'reload' } },
             -- toggle hidden files
-            ['!'] = '<cmd>lua require("drex").toggle_hidden_files()<CR>',
+            ['!'] = '<cmd>lua require("drex.config").toggle_hidden_files()<CR>',
             -- jump around elements
             ['gj'] = {
                 '<cmd>lua require("drex.actions.jump").jump_to_next_sibling()<CR>',
@@ -422,6 +423,12 @@ function M.set_default_keybindings(buffer)
             end
         end
     end
+end
+
+---Toggle whether hidden files are shown
+function M.toggle_hidden_files()
+    M.options.show_hidden_files = not M.options.show_hidden_files
+    require('drex').reload_directory()
 end
 
 return M

@@ -250,11 +250,11 @@ function M.scan_directory(path, root_path)
     end
 
     -- if given a `root_path` calculate the needed indentation
-    local indentation = '  '
+    local indentation = config.options.indentation
     if root_path and path ~= root_path then
         local relative_path = path:gsub('^' .. vim.pesc(root_path), '')
         local _, count = relative_path:gsub(utils.path_separator, '')
-        indentation = indentation .. string.rep('  ', count)
+        indentation = indentation .. string.rep(indentation, count)
     end
 
     local content = {}
