@@ -9,7 +9,7 @@ local config = require('drex.config')
 
 ---Make the letters more visible by setting the used highlight to "reverse"
 local function set_hl()
-    vim.api.nvim_set_hl(0, 'SwitchWindowReverse', { reverse = true })
+    vim.api.nvim_set_hl(0, 'SwitchWindowReverse', { reverse = true, default = true })
 end
 
 set_hl()
@@ -253,12 +253,14 @@ function M.switch_window()
             col = api.nvim_win_get_width(win),
             focusable = false,
             style = 'minimal',
-            border = 'rounded',
+            border = 'single',
             noautocmd = true,
         })
         api.nvim_win_call(label_window, function()
             vim.fn.matchadd('SwitchWindowReverse', '#')
         end)
+        api.nvim_win_set_option(label_window, 'winhl', 'Normal:Float')
+
         table.insert(label_windows, label_window)
 
         targets[label] = win
