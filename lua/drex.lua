@@ -271,4 +271,9 @@ function M.reload_directory(buffer, path)
     end
 end
 
+function M.toggle_hidden_files()
+    config.options.show_hidden_files = not config.options.show_hidden_files
+    M.reload_directory()
+end
+
 return M
